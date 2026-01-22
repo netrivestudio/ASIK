@@ -5,7 +5,7 @@ function exportPDF() {
   }
 
   const { jsPDF } = window.jspdf;
-  const doc = new jsPDF();
+  const doc = new jsPDF("p", "mm", "a4");
 
   // ===============================
   // HITUNG TOTAL
@@ -22,24 +22,22 @@ function exportPDF() {
   });
 
   const saldoAkhir = totalIncome - totalExpense;
-  const tanggalCetak = new Date().toLocaleDateString("id-ID");
+  const exportTime = new Date().toLocaleString("id-ID");
 
   // ===============================
-  // HEADER LAPORAN
+  // HEADER (MINUMO STYLE)
   // ===============================
-  doc.setFontSize(16);
-  doc.text("ASIK", 105, 15, { align: "center" });
+  doc.setFontSize(14);
+  doc.text("ASIK - Amal Sosial Kemasyarakatan", 14, 15);
 
-  doc.setFontSize(11);
-  doc.text("Amal Sosial Kemasyarakatan", 105, 22, { align: "center" });
-  doc.text("Bersama Kita Berbagi, Bersama Kita Peduli", 105, 28, { align: "center" });
-
-  doc.text(`Tanggal Cetak : ${tanggalCetak}`, 14, 40);
+  doc.setFontSize(10);
+  doc.text(`Export: ${exportTime}`, 14, 22);
 
   // ===============================
   // DATA TABEL
   // ===============================
   const head = [[
+    "No",
     "Tanggal",
     "Nama Donatur",
     "Jenis",
@@ -48,7 +46,8 @@ function exportPDF() {
     "Status"
   ]];
 
-  const body = data.map(item => ([
+  const body = data.map((item, i) => ([
+    i + 1,
     item.tanggal,
     item.nama,
     item.jenis,
@@ -57,38 +56,37 @@ function exportPDF() {
     item.status
   ]));
 
-  // ===============================
-  // TABEL PDF (HEADER BIRU MINUMO)
-  // ===============================
   doc.autoTable({
+    startY: 30,
     head: head,
     body: body,
-    startY: 45,
+    theme: "grid",
     styles: {
       fontSize: 9,
-      halign: "center"
+      cellPadding: 3
     },
-    didParseCell: function (dataCell) {
-      if (dataCell.section === "head") {
-        dataCell.cell.styles.fillColor = [21, 101, 192]; // BIRU MINUMO
-        dataCell.cell.styles.textColor = [255, 255, 255]; // PUTIH
-        dataCell.cell.styles.fontStyle = "bold";
-      }
+    headStyles: {
+      fillColor: [33, 150, 243],   // BIRU MINUMO
+      textColor: 255,
+      fontStyle: "bold"
+    },
+    alternateRowStyles: {
+      fillColor: [245, 245, 245]   // ZEBRA abu-abu
     }
   });
 
   // ===============================
-  // RINGKASAN DI BAWAH TABEL
+  // RINGKASAN (BAWAH TABEL)
   // ===============================
-  let y = doc.lastAutoTable.finalY + 10;
+  let y = doc.lastAutoTable.finalY + 8;
 
-  doc.setFontSize(11);
-  doc.text(`Total Income   : Rp ${totalIncome.toLocaleString("id-ID")}`, 14, y);
-  doc.text(`Total Expense  : Rp ${totalExpense.toLocaleString("id-ID")}`, 14, y + 8);
-  doc.text(`Saldo Akhir    : Rp ${saldoAkhir.toLocaleString("id-ID")}`, 14, y + 16);
+  doc.setFontSize(10);
+  doc.text(`Total Income      : Rp ${totalIncome.toLocaleString("id-ID")}`, 14, y);
+  doc.text(`Total Expense     : Rp ${totalExpense.toLocaleString("id-ID")}`, 14, y + 6);
+  doc.text(`Saldo Akhir       : Rp ${saldoAkhir.toLocaleString("id-ID")}`, 14, y + 12);
 
   // ===============================
-  // SIMPAN FILE PDF
+  // SIMPAN
   // ===============================
-  doc.save("Laporan_ASIK_Detail.pdf");
+  doc.save("Laporan_ASIK.pdf");
 }
