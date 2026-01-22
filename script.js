@@ -7,9 +7,9 @@ function exportPDF() {
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF();
 
-  // =====================
+  // ===============================
   // HITUNG TOTAL
-  // =====================
+  // ===============================
   let totalIncome = 0;
   let totalExpense = 0;
 
@@ -24,9 +24,9 @@ function exportPDF() {
   const saldoAkhir = totalIncome - totalExpense;
   const tanggalCetak = new Date().toLocaleDateString("id-ID");
 
-  // =====================
+  // ===============================
   // HEADER LAPORAN
-  // =====================
+  // ===============================
   doc.setFontSize(16);
   doc.text("ASIK", 105, 15, { align: "center" });
 
@@ -36,9 +36,9 @@ function exportPDF() {
 
   doc.text(`Tanggal Cetak : ${tanggalCetak}`, 14, 40);
 
-  // =====================
-  // TABEL DETAIL (HEADER BIRU)
-  // =====================
+  // ===============================
+  // DATA TABEL
+  // ===============================
   const head = [[
     "Tanggal",
     "Nama Donatur",
@@ -57,26 +57,29 @@ function exportPDF() {
     item.status
   ]));
 
+  // ===============================
+  // TABEL PDF (HEADER BIRU MINUMO)
+  // ===============================
   doc.autoTable({
     head: head,
     body: body,
     startY: 45,
     styles: {
-      fontSize: 9
-    },
-    headStyles: {
-      fillColor: [21, 101, 192], // BIRU MINUMO
-      textColor: [255, 255, 255], // putih
+      fontSize: 9,
       halign: "center"
     },
-    bodyStyles: {
-      halign: "center"
+    didParseCell: function (dataCell) {
+      if (dataCell.section === "head") {
+        dataCell.cell.styles.fillColor = [21, 101, 192]; // BIRU MINUMO
+        dataCell.cell.styles.textColor = [255, 255, 255]; // PUTIH
+        dataCell.cell.styles.fontStyle = "bold";
+      }
     }
   });
 
-  // =====================
-  // RINGKASAN
-  // =====================
+  // ===============================
+  // RINGKASAN DI BAWAH TABEL
+  // ===============================
   let y = doc.lastAutoTable.finalY + 10;
 
   doc.setFontSize(11);
@@ -84,8 +87,8 @@ function exportPDF() {
   doc.text(`Total Expense  : Rp ${totalExpense.toLocaleString("id-ID")}`, 14, y + 8);
   doc.text(`Saldo Akhir    : Rp ${saldoAkhir.toLocaleString("id-ID")}`, 14, y + 16);
 
-  // =====================
-  // SIMPAN PDF
-  // =====================
+  // ===============================
+  // SIMPAN FILE PDF
+  // ===============================
   doc.save("Laporan_ASIK_Detail.pdf");
 }
