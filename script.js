@@ -18,7 +18,9 @@ function tambahData() {
   const nama = document.getElementById("namaDonatur").value.trim();
   const jenis = document.getElementById("jenis").value;
   const ket = document.getElementById("keterangan").value.trim();
-  const jumlah = parseInt(document.getElementById("jumlah").value) || 0;
+const jumlahInput = document.getElementById("jumlah").value;
+const jumlah = parseInt(jumlahInput.replace(/\./g, "")) || 0;
+
   const status = document.getElementById("status").value;
 
   if (!tanggal || !nama || jumlah <= 0) {
@@ -222,3 +224,4 @@ function exportPDF() {
 // ======================================
 renderTable();
 updateInfo();
+
