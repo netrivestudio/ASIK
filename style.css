@@ -1,0 +1,62 @@
+ body {
+  font-family: Arial, sans-serif;
+  background: #121212;
+  color: #eee;
+  padding: 20px;
+}
+
+header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.tagline {
+  font-size: 14px;
+  opacity: 0.8;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #1e1e1e;
+}
+
+th, td {
+  border: 1px solid #555;
+  padding: 8px;
+  text-align: center;
+}
+
+th {
+  background: #222;
+}
+
+.form-inputs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 10px;
+}
+
+.form-inputs input,
+.form-inputs select,
+.form-inputs button {
+  padding: 8px;
+  background: #2a2a2a;
+  border: 1px solid #555;
+  color: #eee;
+}
+
+button {
+  cursor: pointer;
+}
+
+.btn-danger { background: #c62828; }
+.btn-primary { background: #1565c0; }
+.btn-success { background: #2e7d32; }
+
+.info-section {
+  margin-top: 20px;
+  font-weight: bold;
+}
+

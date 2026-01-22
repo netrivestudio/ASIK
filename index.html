@@ -1,0 +1,95 @@
+ <!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>ASIK - Amal Sosial Kemasyarakatan</title>
+
+  <!-- PWA -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#2e7d32">
+  <link rel="icon" href="assets/asik192.png" type="image/png">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <h1>ASIK</h1>
+    <p class="tagline">Bersama Kita Berbagi, Bersama Kita Peduli</p>
+  </header>
+
+  <!-- TABEL DATA -->
+  <section class="form-section">
+    <table id="dataTable">
+      <thead>
+        <tr>
+          <th>Tanggal</th>
+          <th>Nama Donatur</th>
+          <th>Income / Expense</th>
+          <th>Keterangan</th>
+          <th>Jumlah Uang</th>
+          <th>Status Donatur</th>
+          <th>Hapus Input</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+
+    <!-- FORM INPUT -->
+    <div class="form-inputs">
+      <input type="date" id="tanggal">
+      <input type="text" id="namaDonatur" placeholder="Nama Donatur">
+
+      <select id="jenis">
+        <option value="Income">Income</option>
+        <option value="Expense">Expense</option>
+      </select>
+
+      <input type="text" id="keterangan" placeholder="Keterangan">
+      <input type="number" id="jumlah" placeholder="Jumlah Uang">
+
+      <select id="status">
+        <option value="Tetap">Tetap</option>
+        <option value="Tidak Tetap">Tidak Tetap</option>
+      </select>
+
+      <!-- TOMBOL -->
+      <button onclick="tambahData()">Tambah Data</button>
+      <button class="btn-danger" onclick="hapusSemua()">Hapus Data</button>
+      <button class="btn-primary" onclick="exportPDF()">Export PDF</button>
+      <button class="btn-success" onclick="exportExcel()">Export Excel</button>
+    </div>
+  </section>
+
+  <!-- INFO TOTAL -->
+  <section class="info-section">
+    <p>Total Income : <span id="totalIncome">0</span></p>
+    <p>Total Expense : <span id="totalExpense">0</span></p>
+    <p>Saldo Akhir : <span id="saldoAkhir">0</span></p>
+  </section>
+
+  <!-- LIBRARY EXPORT -->
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jspdf-autotable@3.5.29/dist/jspdf.plugin.autotable.min.js"></script>
+
+  <!-- SCRIPT APP -->
+  <script src="script.js"></script>
+
+  <!-- SERVICE WORKER -->
+  <script>
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("sw.js")
+        .then(() => console.log("Service Worker ASIK registered"))
+        .catch(err => console.log("SW error:", err));
+    }
+  </script>
+
+</body>
+</html>
+

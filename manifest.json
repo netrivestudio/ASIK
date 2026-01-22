@@ -1,0 +1,22 @@
+{
+  "name": "ASIK - Amal Sosial Kemasyarakatan",
+  "short_name": "ASIK",
+  "description": "Bersama Kita Berbagi, Bersama Kita Peduli",
+  "start_url": ".",
+  "scope": ".",
+  "display": "standalone",
+  "background_color": "#121212",
+  "theme_color": "#2e7d32",
+  "icons": [
+    {
+      "src": "assets/asik192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/asik512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
